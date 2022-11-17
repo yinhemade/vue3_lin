@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const person = {
+            name:'张三',
+            age:18
+        }
+
+        // Vue2的响应式——————        
+        // Object.defineProperty(代理商，变量名（字符串形式），{set()、get()、还有各种属性})
+        // let p = {}
+        // Object.defineProperty(p,'name',{
+        //     set(value){
+        //         person.name = value
+        //         console.log('有人修改了name的值');
+        //     },
+        //     get(){
+        //         console.log('有人查看了name的值');
+        //         return person.name
+        //     }
+        // })
+        // Object.defineProperty(p,'age',{
+        //     set(value){
+        //         person.age = value
+        //         console.log('有人修改了age的值');
+        //     },
+        //     get(){
+        //         console.log('有人查看了age的值');
+        //         return person.age
+        //     }
+        // })
+        
+        const p = new Proxy(person, {
+            // 拦截读取属性值
+            get (target, propName) {
+                // return target[propName]
+                return Reflect.get(target, propName)
+            },
+            // 拦截设置属性值或添加新属性
+            set (target, propName, value) {
+                return Reflect.set(target, propName, value)
+                // return person[propName]=value
+            },
+            // 拦截删除属性
+            deleteProperty (target, prop) {
+                return Reflect.deleteProperty(target, propName)
+            }
+        })
+
+
+
+    </script>
+</body>
+</html>
